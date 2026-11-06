@@ -1,95 +1,49 @@
-<a name="readme-top"></a>
+# SillyTavern · 服务器多用户配置版
 
-![][cover]
+这是从服务器当前运行目录整理出来的 SillyTavern 多用户版本，面向个人部署和小范围邀请使用。
 
-<div align="center">
+## 这个版本改了什么
 
-English | [German](readme-de_de.md) | [中文](readme-zh_cn.md) | [繁體中文](readme-zh_tw.md) | [日本語](readme-ja_jp.md) | [Русский](readme-ru_ru.md) | [한국어](readme-ko_kr.md)
+- 多用户账号、邀请码注册和用户数据隔离。
+- 管理员角色与普通用户分开；管理员可以管理角色广场。
+- 角色广场支持 SFW/NSFW 分类、公开状态、简介、详细介绍、导入注意事项和管理员编辑。
+- 角色卡支持上架、下架、删除、拖动排序；各分类独立编号，新增卡默认追加到末尾。
+- 角色卡保留 PNG 内嵌的世界书、正则和脚本等内容，导入后由用户独立使用。
+- 新用户默认界面与配置：Dark Lite 主题、页面宽度 60、聊天补全优先，以及预设/文风等默认项。
+- 非管理员新用户默认关闭 `st-chatu8` 与 `NarraMem（叙忆）`，其他设置不随意改动。
+- 简单配置入口、首次提示、可收起的底部面板，以及登录/注册界面优化。
 
-[![GitHub Stars](https://img.shields.io/github/stars/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/forks)
-[![GitHub Issues](https://img.shields.io/github/issues/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/SillyTavern/SillyTavern.svg)](https://github.com/SillyTavern/SillyTavern/pulls)
+## 数据边界
 
-</div>
+本仓库只保留程序代码、默认配置和角色广场公开资源。
 
----
+不会提交：
 
-SillyTavern provides a single unified interface for many LLM APIs (KoboldAI/CPP, Horde, NovelAI, Ooba, Tabby, OpenAI, OpenRouter, Claude, Mistral and more), a mobile-friendly layout, Visual Novel Mode, Automatic1111 & ComfyUI API image generation integration, TTS, WorldInfo (lorebooks), customizable UI, auto-translate, more prompt options than you'd ever want or need, and endless growth potential via third-party extensions.
+- 管理员账号目录；
+- 其他用户目录、聊天记录、角色卡、世界书和个人设置；
+- API Key、密码、Cookie、`secrets.json`；
+- 邀请码、备份、日志和运行缓存。
 
-We have a [Documentation website](https://docs.sillytavern.app/) to answer most of your questions and help you get started.
+角色广场公开资源位于 `data/_community/`。用户运行数据仍应放在服务器自己的 `data/` 目录中；不要把它们提交到 GitHub。
 
-## What is SillyTavern?
+## 部署提示
 
-SillyTavern (or ST for short) is a locally installed user interface that allows you to interact with text generation LLMs, image generation engines, and TTS voice models.
+1. 克隆仓库并安装依赖：`npm ci`。
+2. 根据服务器环境修改 `config.yaml`，至少设置监听地址、端口、域名白名单和登录安全策略。
+3. 在服务器上单独建立用户数据目录，设置管理员账号、密码和邀请码。
+4. 使用反向代理和 HTTPS 对外提供访问；不要把 API Key 写进仓库文件。
+5. 启动：`node server.js --configPath ./config.yaml`。
 
-Beginning in February 2023 as a fork of TavernAI 1.2.8, SillyTavern now has over 300 contributors and 3 years of independent development under its belt, and continues to serve as a leading software for savvy AI hobbyists.
+仓库中的 `config.yaml` 是已清理敏感值的模板，不包含线上服务器密码。
 
-## Our Vision
+## 目录说明
 
-1. We aim to empower users with as much utility and control over their LLM prompts as possible. The steep learning curve is part of the fun!
-2. We do not provide any online or hosted services, nor programmatically track any user data.
-3. SillyTavern is a passion project brought to you by a dedicated community of LLM enthusiasts, and will always be free and open sourced.
+- `src/community/`：多用户与角色广场服务端逻辑。
+- `public/community.html`、`public/css/community.css`、`public/scripts/community.js`：角色广场页面。
+- `community-config/`：新用户默认配置和默认世界书。
+- `data/_community/`：角色广场公开索引、封面和角色卡。
+- [SERVER-DEPLOYMENT.md](SERVER-DEPLOYMENT.md)：发布范围与数据安全说明。
 
-## Do I need a powerful PC to run SillyTavern?
+## 上游项目
 
-The hardware requirements are minimal: it will run on anything that can run NodeJS 20 or higher. If you intend to do LLM inference on your local machine, we recommend a 3000-series NVIDIA graphics card with at least 6GB of VRAM, but actual requirements may vary depending on the model and backend you choose to use.
-
-## Questions or suggestions?
-
-### Discord server
-
-| [![][discord-shield-badge]][discord-link] | [Join our Discord community!](https://discord.gg/sillytavern) Get support, share favorite characters and prompts. |
-| :---------------------------------------- | :----------------------------------------------------------------------------------------------------------------- |
-
-Or get in touch with the developers directly:
-
-* Discord: cohee, rossascends, wolfsblvt
-* Reddit: [/u/RossAscends](https://www.reddit.com/user/RossAscends/), [/u/sillylossy](https://www.reddit.com/user/sillylossy/), [u/Wolfsblvt](https://www.reddit.com/user/Wolfsblvt/)
-* [Post a GitHub issue](https://github.com/SillyTavern/SillyTavern/issues)
-
-### I like your project! How do I contribute?
-
-1. Send pull requests. Learn how to contribute: [CONTRIBUTING.md](../CONTRIBUTING.md)
-2. Send feature suggestions and issue reports using the provided templates.
-3. Read this entire readme file and check the documentation website first, to avoid sending duplicate issues.
-
-## Screenshots
-
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/9b5f32f0-c3b3-4102-b3f5-0e9213c0f50f">
-<img width="500" alt="image" src="https://github.com/user-attachments/assets/913fdbaa-7d33-42f1-ae2c-89dca41c53d1">
-
-## Installation
-
-For detailed installation instructions, please visit our documentation:
-
-* **[Windows Installation Guide](https://docs.sillytavern.app/installation/windows/)**
-* **[MacOS/Linux Installation Guide](https://docs.sillytavern.app/installation/linuxmacos/)**
-* **[Android (Termux) Installation Guide](https://docs.sillytavern.app/installation/android-(termux)/)**
-* **[Docker Installation Guide](https://docs.sillytavern.app/installation/docker/)**
-
-## License and credits
-
-**This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.**
-
-* [TavernAI](https://github.com/TavernAI/TavernAI) 1.2.8 by Humi: MIT License
-* Portions of CncAnon's TavernAITurbo mod used with permission
-* Visual Novel Mode inspired by the work of PepperTaco (<https://github.com/peppertaco/Tavern/>)
-* Noto Sans font by Google (OFL license)
-* Lexer/Parser by Chevrotain (Apache-2.0 license) <https://github.com/chevrotain/chevrotain>
-* Icon theme by Font Awesome <https://fontawesome.com> (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
-* Default content by @OtisAlejandro (Seraphina character and lorebook) and @kallmeflocc (10K Discord Users Celebratory Background)
-* Docker guide by [@mrguymiah](https://github.com/mrguymiah) and [@Bronya-Rand](https://github.com/Bronya-Rand)
-* kokoro-js library by [@hexgrad](https://github.com/hexgrad) (Apache-2.0 License)
-
-## Top Contributors
-
-[![Contributors](https://contrib.rocks/image?repo=SillyTavern/SillyTavern)](https://github.com/SillyTavern/SillyTavern/graphs/contributors)
-
-<!-- LINK GROUP -->
-[cover]: https://github.com/user-attachments/assets/01a6ae9a-16aa-45f2-8bff-32b5dc587e44
-[discord-link]: https://discord.gg/sillytavern
-[discord-shield-badge]: https://img.shields.io/discord/1100685673633153084?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=for-the-badge
+本项目基于 [SillyTavern](https://github.com/SillyTavern/SillyTavern)，保留其原项目许可证与版权信息；本仓库中的多用户和角色广场改动用于本服务器版本。
