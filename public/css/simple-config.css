@@ -1,0 +1,32 @@
+:host { all: initial; color-scheme: dark; }
+*, *::before, *::after { box-sizing: border-box; }
+dialog { width: min(760px, calc(100vw - 32px)); max-width: 760px; max-height: calc(100dvh - 48px); margin: auto; padding: 0; border: 1px solid #3c4843; border-radius: 12px; background: #171c19; color: #dce3de; font: 14px/1.8 system-ui, -apple-system, "Microsoft YaHei", sans-serif; box-shadow: 0 20px 80px #0008; overflow: hidden; }
+dialog[open] { display: flex; flex-direction: column; }
+dialog::backdrop { background: #070d0bcc; }
+button { font: inherit; cursor: pointer; }
+button:disabled { cursor: default; opacity: .55; }
+button:focus-visible, [tabindex]:focus-visible { outline: 2px solid #b8ddc8; outline-offset: 3px; }
+.guide-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 26px; border-bottom: 1px solid #303a33; flex-shrink: 0; }
+h1, p { margin: 0; }
+h1 { font-size: 21px; font-weight: 600; }
+.icon-close { width: 30px; height: 30px; padding: 0; border: 0; border-radius: 5px; color: #b9c6be; background: transparent; font-size: 24px; line-height: 1; }
+.icon-close:not(:disabled):hover { background: #2c3931; }
+.guide-scroll { padding: 18px 26px 22px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #4d6155 transparent; min-height: 0; }
+ol { margin: 0; padding-left: 24px; }
+li { padding-left: 5px; overflow-wrap: anywhere; }
+li + li { margin-top: 15px; }
+li::marker { color: #a6bdad; font-variant-numeric: tabular-nums; }
+strong { font-weight: 600; color: #eef1ed; }
+li:nth-child(3) strong { color: #e0c59e; }
+.guide-footer { padding: 13px 26px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid #303a33; flex-shrink: 0; }
+.guide-footer p { font-size: 11px; color: #96a99c; }
+#simple-config-done { border: 1px solid #a4bea9; border-radius: 6px; background: #b9d7bf; color: #182a1d; font-size: 13px; padding: 7px 20px; min-width: 110px; white-space: nowrap; }
+#simple-config-done:not(:disabled):hover { background: #d2e7d6; }
+@media (max-width: 560px) {
+    dialog { width: calc(100vw - 16px); max-height: calc(100dvh - 20px); font-size: 13px; }
+    .guide-header { padding: 14px 17px; }
+    .guide-scroll { padding: 16px 17px 20px; }
+    li + li { margin-top: 13px; }
+    .guide-footer { padding: 12px 17px; gap: 10px; }
+    .guide-footer p { font-size: 10px; }
+}

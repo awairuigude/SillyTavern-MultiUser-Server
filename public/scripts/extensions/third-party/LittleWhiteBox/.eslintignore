@@ -1,0 +1,7 @@
+libs/**
+**/libs/**
+**/*.min.js
+modules/assistant/dist/**
+modules/ebook/dist/**
+modules/fourth-wall/dist/**
+modules/tavern/dist/**

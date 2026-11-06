@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>角色广场 · SillyTavern</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/community.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="community.html"><span class="brand-mark" aria-hidden="true">✦</span> 角色广场 <span class="brand-caption">SILLYTAVERN</span></a>
+        <nav aria-label="主导航">
+            <span id="currentAccount" class="account-name"></span>
+            <button id="manageToggle" class="button secondary" type="button" hidden>管理广场</button>
+            <button id="contentModeToggle" class="button secondary" type="button" aria-pressed="false">NSFW</button>
+            <a class="button secondary" href="/">返回酒馆 <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <p class="eyebrow">发现角色 · 开启对话</p>
+            <h1>下一段故事，<br>从这里开始<span class="accent">。</span></h1>
+            <div class="hero-bottom"><p>挑一个感兴趣的角色，带回你的酒馆。<br>导入后的设定与对话，由你自己掌握。</p></div>
+        </section>
+        <dialog id="manage" class="manage-dialog" aria-labelledby="manageTitle">
+            <div class="section-heading"><div><h2 id="manageTitle">管理广场</h2><span class="muted">仅管理员可见</span></div><div class="dialog-actions"><button id="reorderToggle" class="button secondary" type="button">移动排序</button><button id="closeManage" class="button secondary" type="button">关闭</button></div></div>
+            <div class="manage-grid">
+                <section class="panel">
+                    <h3>邀请朋友加入</h3>
+                    <p class="muted">每个邀请码只能注册一次，注册后为普通账户。</p>
+                    <form id="inviteForm" class="inline-form"><label>有效期<select name="days"><option value="7">7 天</option><option value="1">1 天</option><option value="30">30 天</option></select></label><button class="button primary" type="submit">生成邀请码</button></form>
+                    <div id="newInvite" class="new-invite" hidden><label>新邀请码<input id="inviteCode" readonly></label><button id="copyInvite" class="button secondary" type="button">复制</button><small>完整邀请码只显示这一次，请保存后发送给朋友。</small></div>
+                    <ul id="inviteList" class="invite-list"></ul>
+                </section>
+                <section class="panel">
+                    <h3>上架角色卡</h3>
+                    <p class="muted">支持 PNG / JSON 角色卡，单张不超过 32 MiB。</p>
+                    <form id="publishForm" class="stack-form">
+                        <label class="file-label">选择角色卡<input name="card" type="file" accept=".png,.json" required></label>
+                        <label>显示标题 <span class="muted">选填</span><input name="displayName" maxlength="100" placeholder="留空使用卡内标题"></label>
+                        <label>广场简介 <span class="muted">选填</span><textarea name="description" maxlength="600" rows="3" placeholder="留空表示暂不填写"></textarea></label>
+                        <label>详情介绍 <span class="muted">选填</span><textarea name="detail" maxlength="12000" rows="4" placeholder="管理员以后可以在这里填写长篇介绍"></textarea></label>
+                        <div class="form-row"><label>内容分类<select name="rating"><option value="nsfw">NSFW</option><option value="sfw">SFW</option></select></label><label>排序号 <span class="muted">留空自动排到最后</span><input name="sortOrder" type="number" min="0" placeholder="自动追加"></label></div>
+                        <label>导入注意事项 <span class="muted">选填；留空则不显示按钮</span><textarea name="importNotice" maxlength="2000" rows="3" placeholder="玩家点击导入时先看到的内容"></textarea></label>
+                        <label>注意事项类型<select name="importNoticeMode"><option value="recommended">推荐配置</option><option value="required">务必配置</option></select></label>
+                        <button class="button primary" type="submit">上架到角色广场</button>
+                    </form>
+                    <p class="small muted">仅主动上架的卡会被共享，你的私人角色和聊天不会自动出现在这里。</p>
+                </section>
+            </div>
+        </dialog>
+        <section class="library" aria-label="角色列表">
+            <div class="library-toolbar"><div class="library-title"><h2>探索角色</h2><span id="cardCount" class="count-badge">正在加载…</span></div><button id="reorderDone" class="button primary" type="button" hidden>保存排序</button><label class="search-label"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="搜索角色、简介或标签" aria-label="搜索角色、简介或标签"></label><label class="sort-label"><select id="sort" aria-label="排序"><option value="curated" selected>推荐顺序</option><option value="newest">最新上架</option><option value="name">名称排序</option></select></label></div>
+            <div id="tagFilters" class="tag-filters" aria-label="按分类筛选"></div>
+            <p id="status" class="status" role="status" aria-live="polite">正在加载角色广场…</p>
+            <div id="gallery" class="gallery"></div>
+            <div id="emptyState" class="empty-state" hidden><span class="empty-symbol" aria-hidden="true">✧</span><h3 id="emptyTitle">广场还没有角色卡</h3><p id="emptyDescription">管理员上架角色后，你就可以在这里发现并导入。</p><button id="emptyPublish" class="button primary" type="button" hidden>上架第一张角色卡</button></div>
+        </section>
+        <footer>每个账户都有自己的故事。<span>模型连接与 API 请在酒馆内自行设置。</span></footer>
+    </main>
+    <dialog id="cardDetail"><button id="closeDetail" class="dialog-close" type="button" aria-label="关闭详情">×</button><div id="detailContent"></div></dialog>
+    <dialog id="importNoticeDialog"><div class="notice-dialog-content"><h2 id="importNoticeTitle">导入前请看</h2><p id="importNoticeText"></p><p class="muted">请确认后再导入。<span id="importNoticeCountdown">3 秒后可继续</span></p><div class="dialog-actions"><button id="cancelImport" class="button secondary" type="button">取消</button><button id="confirmImport" class="button primary" type="button" disabled>继续导入</button></div></div></dialog>
+    <template id="cardTemplate">
+        <article class="character-card">
+            <button class="cover-button" type="button" aria-label="查看角色详情"><span class="cover-placeholder" aria-hidden="true">✦</span><img class="card-cover" alt="" loading="lazy" hidden><span class="card-state" hidden>已下架</span></button>
+            <div class="card-body"><div class="card-byline"></div><h3 class="card-name"></h3><p class="card-description"></p><div class="card-tags"></div><div class="card-actions"><button class="button primary import-button" type="button">导入我的酒馆 <span aria-hidden="true">＋</span></button><button class="button icon-button notice-button" type="button" hidden>注意事项</button></div><div class="admin-card-actions"><button class="publish-toggle" type="button" hidden></button><button class="edit-card-button" type="button" hidden>编辑</button><button class="delete-card-button" type="button" hidden>删除</button></div></div>
+        </article>
+    </template>
+    <script type="module" src="scripts/community.js"></script>
+</body>
+</html>

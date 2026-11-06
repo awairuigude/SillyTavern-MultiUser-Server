@@ -1,0 +1,43 @@
+# 核心密码文件（绝对不能传）
+data/default-user/secrets.json
+data/cookie-secret.txt
+
+# 环境依赖与本地缓存（根目录下的文件夹）
+node_modules/
+.vscode/
+_cache/
+_storage/
+_webpack/
+
+# 自动化工作流与超大压缩包
+.github/workflows/
+*.zip
+
+# Snapshot credential and runtime exclusions
+**/secrets.json
+**/cookie-secret.txt
+**/.env*
+**/*.pem
+**/*.key
+**/node_modules/
+**/.git/
+**/backups/
+**/thumbnails/
+**/_cache/
+**/_storage/
+**/_webpack/
+*.log
+.gemini/
+
+# Server runtime data is private. Only the sanitized public community bundle
+# is versioned in this repository.
+data/*
+!data/_community/
+data/_community/*
+!data/_community/index.json
+!data/_community/new-user-defaults.json
+!data/_community/*.png
+!data/_community/*.cover.png
+
+# Local transfer staging
+_remote/
